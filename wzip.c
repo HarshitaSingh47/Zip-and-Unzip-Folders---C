@@ -10,20 +10,6 @@
 
 
 
-static void
-check (int test, const char * message, ...)
-{
-    if (test) {
-        va_list args;
-        va_start (args, message);
-        vfprintf (stderr, message, args);
-        va_end (args);
-        fprintf (stderr, "\n");
-        exit (EXIT_FAILURE);
-    }
-}
-
-
 int compress(char* line){
 
     int count = 1; 
@@ -35,7 +21,7 @@ int compress(char* line){
             i++;
         }
       
-         
+            fwrite(count , 1 , sizeof(count) );
             printf("%c%c",count,line[i]);
             count = 1; 
             
