@@ -8,11 +8,22 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-
+static void
+check (int test, const char * message, ...)
+{
+    if (test) {
+        va_list args;
+        va_start (args, message);
+        vfprintf (stderr, message, args);
+        va_end (args);
+        //fprintf (stderr, "\n");
+        exit (EXIT_FAILURE);
+    }
+}
 
 int compress(char* line){
 
-    int count = 1; 
+    char count = 0; 
     int i = 0;
     
     while (line[i]!='\0'){
@@ -20,17 +31,17 @@ int compress(char* line){
             count++;
             i++;
         }
-      
-            fwrite(count , 1 , sizeof(count) );
-            printf("%c%c",count,line[i]);
+            char str = line[i];
+            //const unsigned char *p = 'a';
+            //printf("%c%c",count,line[i]);
+            fwrite(&count, 4, 1, stdout);
+            fwrite(&str, 1, 1, stdout);
+            //printf("%c",str);
             count = 1; 
-            
-
         i++;
-
     }
+    return 0; 
 }
-
 
 int zip(char* file){
 
@@ -94,9 +105,8 @@ int main(int argc, char* argv[]){
         zip(argv[i]);
     }
     }
-
-
     return 0;
 }
+
 
 
