@@ -23,20 +23,18 @@ check (int test, const char * message, ...)
 
 int compress(char* line){
 
-    char count = 0; 
+    int count = 1; 
     int i = 0;
     
-    while (line[i]!='\0'){
+    while (line[i]!=NULL){
         while(line[i]==line[i+1]){
             count++;
             i++;
         }
             char str = line[i];
-            //const unsigned char *p = 'a';
-            //printf("%c%c",count,line[i]);
             fwrite(&count, 4, 1, stdout);
+            
             fwrite(&str, 1, 1, stdout);
-            //printf("%c",str);
             count = 1; 
         i++;
     }
@@ -75,6 +73,7 @@ int zip(char* file){
         } 
 
 
+
     while ((read = getline(&line, &len, fptr)) != -1) {
         if(read>1){
             
@@ -96,7 +95,7 @@ int main(int argc, char* argv[]){
     //check for input
 
     if(argc<2) {
-        printf("Enter filename to zip!\n");
+        printf("pzip: file1 [file2 ...]\n");
         return 1;
     }
     else{
